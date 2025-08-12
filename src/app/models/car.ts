@@ -1,3 +1,5 @@
+export type CarCategory = 'JDM' | 'Euro' | 'American'
+
 export interface Car {
   id: number;
   name: string;

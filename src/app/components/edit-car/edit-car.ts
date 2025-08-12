@@ -41,7 +41,8 @@ export class EditCar implements OnInit {
         description: [car.description],
         image: [car.image],
         horsepower: [car.horsepower],
-        topSpeed: [car.topSpeed]
+        topSpeed: [car.topSpeed],
+        engine: [car.engine]  // Add engine field
       });
     });
   }

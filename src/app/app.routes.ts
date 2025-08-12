@@ -14,6 +14,7 @@ export const routes: Routes = [  // ✅ must export it!
   {path: 'login', component: LoginComponent }, // Route for login
   { path: 'car/:id', component: CarDetail },
   {path: 'add-car', component: AddCarComponent },
+
   // Redirect any unknown paths to the car list
   {path: 'edit-car/:id', component: EditCar }, // Route for editing a car
 
