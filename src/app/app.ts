@@ -12,4 +12,12 @@ import { NavbarComponent } from "./navbar/navbar";
 })
 export class App {
   protected readonly title = signal('jdm-car-blog');
+
+  scrollToCarList(event: Event): void {
+    event.preventDefault();
+    const el = document.getElementById('car-list-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }

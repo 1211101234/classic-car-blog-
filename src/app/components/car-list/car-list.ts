@@ -58,3 +58,4 @@ export class CarList implements OnInit {
     this.store.dispatch(setSort({ key: this.currentSortKey, ascending: this.ascending }));
   }
 }
+

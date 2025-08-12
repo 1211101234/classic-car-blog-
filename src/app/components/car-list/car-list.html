@@ -1,4 +1,4 @@
-<section class="py-12 px-4 sm:px-6 bg-gradient-to-br from-white to-blue-50 min-h-screen">
+<section id="car-list-section" class="py-12 px-4 sm:px-6 bg-gradient-to-br from-white to-blue-50 min-h-screen">
   <div class="max-w-7xl mx-auto">
     <!-- Header Section -->
     <div class="text-center mb-12">
@@ -9,50 +9,52 @@
     </div>
 
     <!-- Filter and Sort Controls -->
-     <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4 max-w-4xl mx-auto px-4">
-   <input
-  #filterInput
-  type="text"
-  placeholder="Filter by origin"
-  (input)="onFilterChange(filterInput.value)"
-  class="w-full sm:w-1/2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-/>
+    <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4 max-w-4xl mx-auto px-4">
+      <input
+        #filterInput
+        type="text"
+        placeholder="Filter by origin"
+        (input)="onFilterChange(filterInput.value)"
+        class="w-full sm:w-1/2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
 
-  <!-- Sort buttons -->
-  <div class="flex space-x-4">
-    <button
-      (click)="onSortChange('origin')"
-      class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition"
-    >
-      Sort by Origin
-    </button>
-    <button
-      (click)="onSortChange('year')"
-      class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition"
-    >
-      Sort by Year
-    </button>
-  </div>
-</div>
+      <!-- Sort buttons -->
+      <div class="flex space-x-4">
+        <button
+          (click)="onSortChange('origin')"
+          class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition"
+        >
+          Sort by Origin
+        </button>
+        <button
+          (click)="onSortChange('year')"
+          class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition"
+        >
+          Sort by Year
+        </button>
+      </div>
+    </div>
 
     <div *ngIf="(cars$ | async) as cars">
       <div *ngIf="cars.length > 0; else noCars">
         <!-- Car Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-<div
-  *ngFor="let car of cars"
-  class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 group cursor-pointer"
-  (click)="goToCarDetails(car.id)"
->
-  <!-- Car Image with Hover Effect -->
-  <div class="relative overflow-hidden h-56">
-    <img
-      [src]="car.image"
-      alt="{{ car.name }}"
-      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-    />
-    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-  </div>
+          <div
+            *ngFor="let car of cars"
+            class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 group cursor-pointer"
+            (click)="goToCarDetails(car.id)"
+          >
+            <!-- Car Image with Hover Effect -->
+            <div class="relative overflow-hidden h-56">
+              <img
+                [src]="car.image"
+                alt="{{ car.name }}"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+            </div>
 
             <!-- Car Details -->
             <div class="p-5">
@@ -66,9 +68,24 @@
               </div>
 
               <div class="flex items-center text-sm text-gray-600 mb-3">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <svg
+                  class="w-4 h-4 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
                 </svg>
                 {{ car.origin }}
               </div>
@@ -81,18 +98,14 @@
                   (click)="editCar(car.id)"
                   class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center"
                 >
-                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                  </svg>
+                  <!-- Edit Icon -->
                   Edit
                 </button>
                 <button
                   (click)="deleteCar(car.id)"
                   class="flex-1 bg-red-50 hover:bg-red-100 text-red-600 font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center"
                 >
-                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                  </svg>
+                  <!-- Delete Icon -->
                   Delete
                 </button>
               </div>
@@ -105,9 +118,6 @@
           routerLink="/add-car"
           class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg px-6 py-3 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex items-center"
         >
-          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-          </svg>
           Add Car
         </a>
       </div>
@@ -116,18 +126,12 @@
       <ng-template #noCars>
         <div class="text-center py-16">
           <div class="max-w-md mx-auto">
-            <svg class="w-20 h-20 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-            </svg>
             <h3 class="text-2xl font-medium text-gray-700 mt-4">No Cars Found</h3>
             <p class="text-gray-500 mt-2">Get started by adding your first vehicle to the collection</p>
             <a
               routerLink="/add-car"
               class="inline-flex items-center mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg shadow-md transition-all hover:-translate-y-0.5"
             >
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-              </svg>
               Add Your First Car
             </a>
           </div>
