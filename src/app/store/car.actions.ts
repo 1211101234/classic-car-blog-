@@ -21,3 +21,15 @@ export const deleteCar = createAction(
   '[Car] Delete Car',
   props<{ id: number }>()
 );
+
+// Set Filter action for origin
+export const setFilter = createAction(
+  '[Car] Set Filter',
+  props<{ origin?: string }>()
+);
+
+// Set Sort action
+export const setSort = createAction(
+  '[Car] Set Sort',
+  props<{ key: keyof Car; ascending: boolean }>()
+);

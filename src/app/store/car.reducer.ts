@@ -3,7 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import { addCar, deleteCar, editCar, loadCars } from './car.actions';
 import { Car } from '../models/car';
 import { initialCarState } from './car.state';
-
+import { setFilter, setSort } from './car.actions';
 
 const mockCars: Car[] = [
   {
@@ -97,7 +97,18 @@ export const carReducer = createReducer(
       ...state,
       cars: updatedCars
     };
-  })
-);
+  }),
 
+   // Handle filter update
+  on(setFilter, (state, { origin }) => ({
+    ...state,
+    filter: { origin },
+  })),
+
+  // Handle sort update
+  on(setSort, (state, { key, ascending }) => ({
+    ...state,
+    sort: { key, ascending },
+  })),
+);
 
