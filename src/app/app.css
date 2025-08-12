@@ -1,0 +1,36 @@
+/* Hero section with colored background */
+.hero-banner {
+  background: linear-gradient(135deg, #1f2937, #4b5563); /* dark blue-gray to steel */
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #ffffff;
+  border-bottom: 4px solid #e63946;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hero-title {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #d1d5db;
+  font-weight: 300;
+  margin-top: 0.5rem;
+}
+
+.footer {
+  background: #e3e3e3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 2rem;
+  border-top: 1px solid #ccc;
+  text-align: center;
+  width: 100%;
+}
