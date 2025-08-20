@@ -1,25 +1,40 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Car } from '../../models/car';
-import { addCar } from '../../store/car.actions';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { selectCarFeature} from '../../store/car.selector';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators'; // ✅ take for one-time subscribe
+import { map, take } from 'rxjs/operators';
+
+// Models & NgRx
+import { Car } from '../../models/car';
+import { addCar } from '../../store/car.actions';
+import { selectCarFeature } from '../../store/car.selector';
+
+// PrimeNG Modules
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-add-car',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    InputNumberModule,
+    ButtonModule,
+    CardModule
+  ],
   templateUrl: './add-car.html',
 })
 export class AddCarComponent {
   newCar: Car = {
     id: 0,
     name: '',
-    year: new Date().getFullYear(),
+    year: null as any,
     origin: '',
     image: '',
     description: '',

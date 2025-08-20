@@ -1,114 +1,110 @@
-<div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-  <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Add a New Car</h2>
+<p-card header="Add New Car" class="p-6 shadow-lg rounded-xl max-w-3xl mx-auto">
+  <form (ngSubmit)="onSubmit()" #carForm="ngForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
 
-  <form (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Car Name -->
     <div>
-      <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Car Name</label>
+      <label for="name" class="block font-medium mb-1">Car Name</label>
       <input
+        id="name"
+        type="text"
+        pInputText
         [(ngModel)]="newCar.name"
         name="name"
-        id="name"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-        placeholder="e.g. Ford Mustang"
         required
-      />
+        placeholder="e.g. Toyota AE86"
+        class="w-full py-1 px-2 text-sm" />
     </div>
 
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Year</label>
-        <input
-          [(ngModel)]="newCar.year"
-          name="year"
-          id="year"
-          type="number"
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-          placeholder="e.g. 2023"
-          min="1900"
-          max="2099"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="horsepower" class="block text-sm font-medium text-gray-700 mb-1">Horsepower</label>
-        <input
-          [(ngModel)]="newCar.horsepower"
-          name="horsepower"
-          id="horsepower"
-          type="number"
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-          placeholder="e.g. 450"
-          min="0"
-        />
-      </div>
-    </div>
-
+    <!-- Year -->
     <div>
-      <label for="engine" class="block text-sm font-medium text-gray-700 mb-1">Engine</label>
-      <input
-        [(ngModel)]="newCar.engine"
-        name="engine"
-        id="engine"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-        placeholder="e.g. 2JZ-GTE 3.0L I6 Twin-Turbo"
-      />
+      <label for="year" class="block font-medium mb-1">Year</label>
+      <p-inputNumber
+        [(ngModel)]="newCar.year"
+        name="year"
+        [min]="1900"
+        [max]="2100"
+        required
+        placeholder="e.g. 1985"
+        inputStyleClass="w-full py-1 px-2 text-sm">
+      </p-inputNumber>
     </div>
 
+    <!-- Origin -->
     <div>
-      <label for="origin" class="block text-sm font-medium text-gray-700 mb-1">Origin</label>
+      <label for="origin" class="block font-medium mb-1">Origin</label>
       <input
+        id="origin"
+        type="text"
+        pInputText
         [(ngModel)]="newCar.origin"
         name="origin"
-        id="origin"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-        placeholder="e.g. United States"
         required
-      />
+        placeholder="e.g. Japan"
+        class="w-full py-1 px-2 text-sm" />
     </div>
 
+    <!-- Horsepower -->
     <div>
-      <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-      <input
-        [(ngModel)]="newCar.image"
-        name="image"
-        id="image"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-        placeholder="https://example.com/car-image.jpg"
+      <label for="horsepower" class="block font-medium mb-1">Horsepower</label>
+      <p-inputNumber
+        [(ngModel)]="newCar.horsepower"
+        name="horsepower"
+        [min]="0"
         required
-      />
+        placeholder="e.g. 130"
+        inputStyleClass="w-full py-1 px-2 text-sm">
+      </p-inputNumber>
     </div>
 
+    <!-- Top Speed -->
     <div>
-      <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-      <textarea
-        [(ngModel)]="newCar.description"
-        name="description"
-        id="description"
-        rows="3"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-        placeholder="Brief description about the car..."
-      ></textarea>
-    </div>
-
-    <div>
-      <label for="topSpeed" class="block text-sm font-medium text-gray-700 mb-1">Top Speed (km/h)</label>
-      <input
+      <label for="topSpeed" class="block font-medium mb-1">Top Speed (km/h)</label>
+      <p-inputNumber
         [(ngModel)]="newCar.topSpeed"
         name="topSpeed"
-        id="topSpeed"
-        type="number"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-        placeholder="e.g. 300"
-        min="0"
-      />
+        [min]="0"
+        required
+        placeholder="e.g. 200"
+        inputStyleClass="w-full py-1 px-2 text-sm">
+      </p-inputNumber>
     </div>
 
-    <button
-      type="submit"
-      class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
-    >
-      Add Car
-    </button>
+    <!-- Image URL -->
+    <div>
+      <label for="image" class="block font-medium mb-1">Image URL</label>
+      <input
+        id="image"
+        type="text"
+        pInputText
+        [(ngModel)]="newCar.image"
+        name="image"
+        required
+        placeholder="e.g. https://example.com/car.jpg"
+        class="w-full py-1 px-2 text-sm" />
+    </div>
+
+    <!-- Description (full width row) -->
+    <div class="md:col-span-2">
+      <label for="description" class="block font-medium mb-1">Description</label>
+      <textarea
+        id="description"
+        pInputText
+        [(ngModel)]="newCar.description"
+        name="description"
+        rows="3"
+        placeholder="e.g. A legendary drift car popularized in Initial D."
+        class="w-full py-1 px-2 text-sm">
+      </textarea>
+    </div>
+
+    <!-- Submit Button (full width row) -->
+    <div class="md:col-span-2">
+      <p-button
+        type="submit"
+        label="Add Car"
+        icon="pi pi-check"
+        styleClass="w-full bg-green-700 hover:bg-green-500 border-0 text-white text-sm py-2">
+      </p-button>
+    </div>
   </form>
-</div>
+</p-card>

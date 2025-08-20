@@ -7,12 +7,26 @@ import { Observable } from 'rxjs';
 import { Car } from '../../models/car';
 import { selectCarById } from '../../store/car.selector';
 
+// ✅ PrimeNG modules
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
+import { DividerModule } from 'primeng/divider';
+import { TagModule } from 'primeng/tag';
+
+
 @Component({
   selector: 'app-car-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,
+// ✅ PrimeNG modules
+    CardModule,
+    ButtonModule,
+    PanelModule,
+    DividerModule,
+    TagModule],
   templateUrl: './car-detail.html',
-  
+
 })
 export class CarDetail implements OnInit {
   car$!: Observable<Car | undefined>;
