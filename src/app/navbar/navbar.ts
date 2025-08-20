@@ -3,27 +3,55 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
 
+// PrimeNG
+import { MenubarModule } from 'primeng/menubar';
+import { ButtonModule } from 'primeng/button';
+import { MenuItem, PrimeIcons } from 'primeng/api';
+
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MenubarModule,
+    ButtonModule
+  ],
   templateUrl: './navbar.html',
   styleUrls: ['./navbar.css']
 })
 export class NavbarComponent {
-  isMenuOpen = false; // mobile menu toggle
+  menuItems: MenuItem[] = [];
 
   constructor(
     public authService: AuthService,
     private router: Router
   ) {}
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+  ngOnInit(): void {
+    this.buildMenu();
   }
 
-  logout() {
+  buildMenu(): void {
+    this.menuItems = [
+      { label: 'Home', icon: 'pi pi-home', routerLink: '/', styleClass: 'text-white hover:text-red-400' },
+      { label: 'Cars', icon: 'pi pi-car', routerLink: '/cars', styleClass: 'text-white hover:text-red-400' }
+    ];
+
+    if (this.authService.isLoggedIn()) {
+      this.menuItems.push({
+        label: 'Add Car',
+        icon: 'pi pi-plus',
+        routerLink: '/add-car',
+        styleClass: 'text-white hover:text-red-400'
+      });
+    }
+  }
+
+  logout(): void {
     this.authService.logout();
+    this.buildMenu(); // refresh menu
     this.router.navigate(['/login']);
   }
 }

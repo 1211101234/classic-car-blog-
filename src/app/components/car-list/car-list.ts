@@ -7,10 +7,14 @@ import { Car } from '../../models/car';
 import { loadCars, deleteCar, setFilter, setSort } from '../../store/car.actions';
 import { selectFilteredSortedCars } from '../../store/car.selector';
 
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
+
 @Component({
   selector: 'app-car-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ButtonModule, TableModule, CardModule],
   templateUrl: './car-list.html',
 })
 export class CarList implements OnInit {

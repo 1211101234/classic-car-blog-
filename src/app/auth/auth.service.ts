@@ -10,6 +10,9 @@ export interface User {
   providedIn: 'root',
 })
 export class AuthService {
+  isAuthenticated(): boolean {
+    throw new Error('Method not implemented.');
+  }
   private users: User[] = [];
   private loggedInUser: User | null = null;
 

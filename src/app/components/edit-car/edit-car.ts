@@ -6,12 +6,28 @@ import { selectCarById } from '../../store/car.selector';
 import { CommonModule } from '@angular/common';
 import { editCar } from '../../store/car.actions';
 import { Car } from '../../models/car';
+import { CarList } from '../car-list/car-list';
+// ✅ PrimeNG modules
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-edit-car',
   standalone: true,
   templateUrl: './edit-car.html',
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    // PrimeNG modules
+    ButtonModule,
+    CardModule,
+    InputTextModule,
+    InputNumberModule,
+    TextareaModule,
+  ],
 })
 export class EditCar implements OnInit {
   carForm!: FormGroup;
@@ -42,7 +58,7 @@ export class EditCar implements OnInit {
         image: [car.image],
         horsepower: [car.horsepower],
         topSpeed: [car.topSpeed],
-        engine: [car.engine]  // Add engine field
+        engine: [car.engine]
       });
     });
   }
@@ -56,5 +72,14 @@ export class EditCar implements OnInit {
       this.store.dispatch(editCar({ car: updatedCar }));
       this.router.navigate(['/']);
     }
+  }
+
+  // Optional future methods
+  deleteCar() {
+    // TODO: Implement delete car with confirmation dialog
+  }
+
+  cancelEdit() {
+    this.router.navigate(['/']);
   }
 }

@@ -10,7 +10,7 @@
 
     <!-- Filter and Sort Controls -->
     <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4 max-w-4xl mx-auto px-4">
-      <input
+      <input pInputText
         #filterInput
         type="text"
         placeholder="Filter by origin"
@@ -20,18 +20,17 @@
 
       <!-- Sort buttons -->
       <div class="flex space-x-4">
-        <button
+        <p-button
           (click)="onSortChange('origin')"
-          class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition"
-        >
-          Sort by Origin
-        </button>
-        <button
+          label="Sort by Origin"
+          styleClass="px-4 py-2 bg-blue-50 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition focus: outline-blue-500 focus:ring-2 focus:ring-blue-600">
+        </p-button>
+
+        <p-button
           (click)="onSortChange('year')"
-          class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition"
-        >
-          Sort by Year
-        </button>
+          label="Sort by Year"
+          styleClass="px-4 py-2 bg-blue-50 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition focus: outline-blue-500 focus:ring-2 focus:ring-blue-600">
+        </p-button>
       </div>
     </div>
 
@@ -94,20 +93,18 @@
 
               <!-- Action Buttons -->
               <div class="flex space-x-3">
-                <button
+                <p-button
                   (click)="editCar(car.id)"
-                  class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center"
-                >
-                  <!-- Edit Icon -->
-                  Edit
-                </button>
-                <button
+                  label="Edit"
+                  styleClass="flex-1 bg-blue-50 hover:bg-blue-100 border-blue-600 text-blue-600 font-medium py-2 px-4 rounded-lg focus: outline-blue-500 focus:ring-2 focus:ring-blue-600 transition-all duration-200 ">
+                </p-button>
+
+                <p-button
                   (click)="deleteCar(car.id)"
-                  class="flex-1 bg-red-50 hover:bg-red-100 text-red-600 font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center"
-                >
-                  <!-- Delete Icon -->
-                  Delete
-                </button>
+                  label="Delete"
+                  styleClass="bg-red-50 hover:bg-red-100 border-red-600 text-red-600 font-medium py-2 px-4 rounded-lg focus: outline-red-500 focus:ring-2 focus:ring-red-600 transition-all duration-200 ">
+
+                </p-button>
               </div>
             </div>
           </div>
@@ -128,12 +125,11 @@
           <div class="max-w-md mx-auto">
             <h3 class="text-2xl font-medium text-gray-700 mt-4">No Cars Found</h3>
             <p class="text-gray-500 mt-2">Get started by adding your first vehicle to the collection</p>
-            <a
-              routerLink="/add-car"
-              class="inline-flex items-center mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg shadow-md transition-all hover:-translate-y-0.5"
-            >
-              Add Your First Car
-            </a>
+            <p-button
+              [routerLink]="['/add-car']"
+              label="Add Your First Car"
+              styleClass="inline-flex items-center mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg shadow-md transition-all hover:-translate-y-0.5">
+            </p-button>
           </div>
         </div>
       </ng-template>
