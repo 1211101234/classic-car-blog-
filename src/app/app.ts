@@ -1,12 +1,24 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from "./navbar/navbar";
+import { NavbarComponent } from './navbar/navbar';
+
+// PrimeNG Imports
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, NavbarComponent],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    NavbarComponent,
+    CardModule,    
+    ButtonModule,
+    PanelModule
+  ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })

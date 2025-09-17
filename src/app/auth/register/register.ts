@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService, User } from '../auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService, User } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -11,11 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './register.html'
 })
 export class RegisterComponent {
-  user: User = {
-    username: '',
-    email: '',
-    password: ''
-  };
+  user: User = { username: '', email: '', password: '' };
   confirmPassword = '';
   errorMessage = '';
   successMessage = '';
