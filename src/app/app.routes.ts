@@ -1,30 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CarList } from './components/car-list/car-list';
-import { FormsModule } from '@angular/forms';
 import { CarDetail } from './components/car-detail/car-detail';
 import { AddCarComponent } from './components/add-car/add-car';
-import { EditCar } from './components/edit-car/edit-car'; // Import EditCar component
+import { EditCar } from './components/edit-car/edit-car';
 import { LoginComponent } from './auth/login/login';
 import { RegisterComponent } from './auth/register/register';
 import { HomeComponent } from './components/home/home';
 
-export const routes: Routes = [  // ✅ must export it!
-  {path:'app-home',component: HomeComponent},
+export const routes: Routes = [
+  { path: '', component: HomeComponent }, // ✅ root path -> home
+  { path: 'home', component: HomeComponent }, // optional alias
   { path: 'carlist', component: CarList },
-  { path: 'register', component: RegisterComponent },
-  {path: 'login', component: LoginComponent }, // Route for login
   { path: 'car/:id', component: CarDetail },
-  {path: 'add-car', component: AddCarComponent },
- { path: 'register', component: RegisterComponent },
-  { path: 'app-home', redirectTo: 'register', pathMatch: 'full' },
+  { path: 'add-car', component: AddCarComponent },
+  { path: 'edit-car/:id', component: EditCar },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 
-  // Redirect any unknown paths to the car list
-  {path: 'edit-car/:id', component: EditCar }, // Route for editing a car
-
-  { path: '**', redirectTo: '' },
+  // catch-all: redirect unknown routes to home
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

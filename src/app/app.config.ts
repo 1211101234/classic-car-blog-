@@ -5,12 +5,14 @@ import { provideEffects } from '@ngrx/effects';
 import { routes } from './app.routes';
 import { AuthEffects } from './store/auth.effects';
 import { authReducer } from './store/auth.reducer';
-import { ActionReducer, Action } from '@ngrx/store';
-import { AuthState } from './store/auth.models';
-import {providePrimeNG} from 'primeng/config';
+import { providePrimeNG } from 'primeng/config';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-//  PrimeNG v20 AoT theme import
 import Aura from '@primeuix/themes/aura';
+
+// ✅ Firebase imports
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { environment } from '../environments/environment'; // <-- create this file if missing
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,10 +21,10 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: Aura,
         options: {
-            cssLayer: {
-                name: 'primeng',
-                order: 'theme, base, primeng'
-            }
+          cssLayer: {
+            name: 'primeng',
+            order: 'theme, base, primeng'
+          }
         }
       }
     }),
@@ -31,6 +33,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore({ auth: authReducer }),
     provideEffects([AuthEffects]),
+
+    // ✅ Add Firebase + Firestore here
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore())
   ]
 };
-
