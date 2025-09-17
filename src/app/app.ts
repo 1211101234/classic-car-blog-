@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar';
 
@@ -15,7 +15,7 @@ import { PanelModule } from 'primeng/panel';
     RouterOutlet,
     CommonModule,
     NavbarComponent,
-    CardModule,    
+    CardModule,
     ButtonModule,
     PanelModule
   ],
@@ -25,11 +25,27 @@ import { PanelModule } from 'primeng/panel';
 export class App {
   protected readonly title = signal('jdm-car-blog');
 
+  constructor(private router: Router) {}
+
   scrollToCarList(event: Event): void {
     event.preventDefault();
-    const el = document.getElementById('car-list-section');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    if (this.router.url === '/carlist') {
+      // already there → just scroll
+      const el = document.getElementById('car-list-section');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      // navigate to /carlist, then scroll
+      this.router.navigate(['/carlist']).then(() => {
+        setTimeout(() => {
+          const el = document.getElementById('car-list-section');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 300);
+      });
     }
   }
 }

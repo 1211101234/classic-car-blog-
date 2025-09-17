@@ -35,8 +35,8 @@ export class NavbarComponent {
 
   buildMenu(): void {
     this.menuItems = [
-      { label: 'Home', icon: 'pi pi-home', routerLink: '/',  },
-      { label: 'Cars', icon: 'pi pi-car', routerLink: '/cars',  }
+      { label: 'Home', icon: 'pi pi-home', routerLink: '/app-home',  },
+      { label: 'Cars', icon: 'pi pi-car', routerLink: '/carlist',  }
     ];
 
     if (this.authService.isLoggedIn()) {

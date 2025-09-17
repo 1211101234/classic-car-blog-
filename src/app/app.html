@@ -1,46 +1,89 @@
-<!-- Navbar -->
-<app-navbar></app-navbar>
+<div class="min-h-screen flex flex-col bg-gray-900 text-white">
+  <!-- Navbar -->
+  <app-navbar></app-navbar>
 
-<!-- Hero Section -->
-<section class="relative bg-gray-900 text-white overflow-hidden">
-  <div
-    class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1593941707882-a5bba53b0998?q=80&w=2070')] bg-cover bg-center opacity-50"
-  ></div>
-  <div class="container mx-auto px-6 py-32 relative z-10">
-    <div class="max-w-3xl">
-      <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
-        Discover <span class="text-red-600">Classic</span> Icons
-      </h1>
-      <p class="text-xl md:text-2xl mb-8">
-        Where automotive legends from around the world come to life. Explore the golden era of performance and
-        design.
-      </p>
-      <a
-        href="#car-list-section"
-        (click)="scrollToCarList($event)"
-        class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105 shadow-lg"
-        >Explore Collection →</a
-      >
+  <!-- Hero Section -->
+  <section class="relative bg-gray-900 text-white overflow-hidden">
+    <!-- Background image -->
+    <div
+      class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1593941707882-a5bba53b0998?q=80&w=2070')] bg-cover bg-center opacity-50"
+    ></div>
+
+    <!-- Dotted mask overlay -->
+    <div
+      class="absolute inset-0"
+      style="
+        -webkit-mask-image: radial-gradient(
+          circle,
+          rgba(0, 0, 0, 1) 70%,
+          transparent 71%
+        );
+        -webkit-mask-size: 20px 20px;
+        -webkit-mask-repeat: repeat;
+        mask-image: radial-gradient(
+          circle,
+          rgba(0, 0, 0, 1) 70%,
+          transparent 71%
+        );
+        mask-size: 20px 20px;
+        mask-repeat: repeat;
+        background: linear-gradient(to bottom, transparent 60%, white 100%);
+      "
+    ></div>
+
+    <!-- Content -->
+    <div class="container mx-auto px-6 py-32 relative z-10">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+          Discover <span class="text-red-600">Classic</span> Icons
+        </h1>
+        <p class="text-xl md:text-2xl mb-8">
+          Where automotive legends from around the world come to life. Explore
+          the golden era of performance and design.
+        </p>
+        <a
+          href="#"
+          (click)="scrollToCarList($event)"
+          class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105 shadow-lg"
+        >
+          Explore Collection →
+        </a>
+      </div>
     </div>
-  </div>
-  <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-50 to-transparent"></div>
-</section>
+  </section>
 
-<!-- Router Outlet (for main content) -->
-<main class="flex-grow container mx-auto px-6 py-12">
-  <router-outlet></router-outlet>
-</main>
+  <!-- Router Outlet (for main content) -->
+  <main class="flex-grow container mx-auto px-6 py-12">
+    <router-outlet></router-outlet>
+  </main>
 
-<!--footer-->
-<p-panel class="bg-gray-900 border-0 size-auto text-white shadow-inner !rounded-none">
-  <div class="container mx-auto px-6 py-6 text-center">
-    <p class="mb-4">Follow us on social media:</p>
-    <div class="flex justify-center gap-4 mb-4">
-      <button pButton type="button" icon="pi pi-facebook" class="p-button-rounded p-button-text text-white"></button>
-      <button pButton type="button" icon="pi pi-twitter" class="p-button-rounded p-button-text text-white"></button>
-      <button pButton type="button" icon="pi pi-instagram" class="p-button-rounded p-button-text text-white"></button>
+  <!-- Footer -->
+  <p-panel
+    class="bg-gray-900 border-0 size-auto text-white shadow-inner !rounded-none"
+  >
+    <div class="container mx-auto px-6 py-6 text-center">
+      <p class="mb-4">Follow us on social media:</p>
+      <div class="flex justify-center gap-4 mb-4">
+        <button
+          pButton
+          type="button"
+          icon="pi pi-facebook"
+          class="p-button-rounded p-button-text text-white"
+        ></button>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-twitter"
+          class="p-button-rounded p-button-text text-white"
+        ></button>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-instagram"
+          class="p-button-rounded p-button-text text-white"
+        ></button>
+      </div>
+      <p>&copy; 2025 Classic Car Blog. All rights reserved.</p>
     </div>
-    <p>&copy; 2025 Classic Car Blog. All rights reserved.</p>
-  </div>
-</p-panel>
-
+  </p-panel>
+</div>

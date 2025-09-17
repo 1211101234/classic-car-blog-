@@ -1,0 +1,48 @@
+<div class="relative bg-gray-900 text-white">
+
+  <!-- Featured Car Section -->
+  <section class="max-w-6xl mx-auto py-12 px-6">
+    <h2 class="text-3xl font-bold mb-6 text-center">Featured Car of the Month</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <img
+        [src]="featuredCar.image"
+        [alt]="featuredCar.name"
+        class="rounded-xl shadow-lg"
+      />
+      <div>
+        <h3 class="text-2xl font-semibold mb-3">{{ featuredCar.name }}</h3>
+        <p class="mb-6 leading-relaxed">{{ featuredCar.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Car Race Section -->
+  <section class="bg-gray-800 py-12 px-6">
+    <h2 class="text-3xl font-bold mb-10 text-center">Legendary Race Classes</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div
+        *ngFor="let race of carRaces"
+        class="bg-gray-900 rounded-xl shadow-lg overflow-hidden hover:scale-105 transform transition"
+      >
+        <img [src]="race.image" [alt]="race.name" class="w-full h-40 object-cover" />
+        <div class="p-4">
+          <h3 class="text-xl font-semibold mb-2">{{ race.name }}</h3>
+          <p class="text-sm text-gray-400 mb-2">{{ race.era }}</p>
+          <p class="text-gray-300">{{ race.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tribute Quote Section -->
+  <section class="bg-gray-700 py-12 px-6 text-center">
+    <blockquote class="text-2xl italic font-light max-w-3xl mx-auto">
+      {{ tributeQuote }}
+    </blockquote>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 py-6 text-center text-sm text-gray-400">
+    Built by enthusiasts, for enthusiasts. Long live the classics.
+  </footer>
+</div>
