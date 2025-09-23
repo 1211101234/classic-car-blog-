@@ -1,0 +1,116 @@
+<p-card header="Add New Car" class="p-6 shadow-lg rounded-xl max-w-3xl mx-auto">
+  <form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+
+    <!-- Car Name -->
+    <div>
+      <label for="name" class="block font-medium mb-1">Car Name</label>
+      <input
+        id="name"
+        type="text"
+        pInputText
+        formControlName="name"
+        placeholder="e.g. Toyota AE86"
+        class="w-full py-1 px-2 text-sm"
+      />
+    </div>
+
+    <!-- Year -->
+    <div>
+      <label for="year" class="block font-medium mb-1">Year</label>
+      <p-inputNumber
+        formControlName="year"
+        [min]="1900"
+        [max]="2100"
+        [useGrouping]="false"
+        placeholder="e.g. 1985"
+        inputStyleClass="w-full py-1 px-2 text-sm"
+      ></p-inputNumber>
+    </div>
+
+    <!-- Origin -->
+    <div>
+      <label for="origin" class="block font-medium mb-1">Origin</label>
+      <input
+        id="origin"
+        type="text"
+        pInputText
+        formControlName="origin"
+        placeholder="e.g. Japan"
+        class="w-full py-1 px-2 text-sm"
+      />
+    </div>
+
+    <!-- Horsepower -->
+    <div>
+      <label for="horsepower" class="block font-medium mb-1">Horsepower</label>
+      <p-inputNumber
+        formControlName="horsepower"
+        [min]="0"
+        placeholder="e.g. 130"
+        inputStyleClass="w-full py-1 px-2 text-sm"
+      ></p-inputNumber>
+    </div>
+
+    <!-- Top Speed -->
+    <div>
+      <label for="top_speed" class="block font-medium mb-1">Top Speed (km/h)</label>
+      <p-inputNumber
+        formControlName="top_speed"
+        [min]="0"
+        placeholder="e.g. 200"
+        inputStyleClass="w-full py-1 px-2 text-sm"
+      ></p-inputNumber>
+    </div>
+
+    <!-- Engine -->
+    <div>
+      <label for="engine" class="block font-medium mb-1">Engine</label>
+      <input
+        id="engine"
+        type="text"
+        pInputText
+        formControlName="engine"
+        placeholder="e.g. 1.6L I4"
+        class="w-full py-1 px-2 text-sm"
+      />
+    </div>
+
+    <!-- Image URL -->
+    <div>
+      <label for="image" class="block font-medium mb-1">Image URL</label>
+      <input
+        id="image"
+        type="text"
+        pInputText
+        formControlName="image"
+        placeholder="e.g. https://example.com/car.jpg"
+        class="w-full py-1 px-2 text-sm"
+      />
+    </div>
+
+    <!-- Description (full width row) -->
+    <div class="md:col-span-2">
+      <label for="description" class="block font-medium mb-1">Description</label>
+      <textarea
+        id="description"
+        pInputText
+        formControlName="description"
+        rows="3"
+        placeholder="e.g. A legendary drift car popularized in Initial D."
+        class="w-full py-1 px-2 text-sm"
+      ></textarea>
+    </div>
+
+    <!-- Submit Button (full width row) -->
+    <div class="md:col-span-2">
+      <p-button
+        type="submit"
+        label="Add Car"
+        icon="pi pi-check"
+        styleClass="w-full bg-green-700 hover:bg-green-500 border-0 text-white text-sm py-2"
+        [disabled]="carForm.invalid"
+      ></p-button>
+    </div>
+
+  </form>
+</p-card>

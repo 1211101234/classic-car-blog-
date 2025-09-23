@@ -1,0 +1,31 @@
+<!-- Top Navbar -->
+<p-menubar
+  class="bg-white text-white shadow-lg border-0 h-full w-full rounded-none
+         [&_.p-menuitem-link]:!text-white
+         [&_.p-menuitem-link:hover]:!text-red-400"
+  [model]="menuItems">
+
+  <!-- Left: Logo -->
+  <ng-template pTemplate="start">
+    <a routerLink="/" class="text-xxl font-bold text-red-500 border-none">Classic Car Blog</a>
+  </ng-template>
+
+  <!-- Right: Desktop Auth Controls -->
+  <ng-template pTemplate="end">
+    <div class="flex items-center space-x-6">
+      <ng-container *ngIf="authService.isLoggedIn(); else guestLinks">
+        <span class="text-black">Welcome, {{ authService.getUsername() }}</span>
+        <p-button
+          (click)="logout()"
+          label="Logout"
+          styleClass="bg-red-500 hover:bg-red-600 border-none text-white px-3 py-1 rounded-lg">
+        </p-button>
+      </ng-container>
+
+      <ng-template #guestLinks>
+        <a routerLink="/login" class="bg-red-900 hover:bg-red-600 px-3 py-1 rounded-lg">Login</a>
+        <a routerLink="/register" class="bg-red-900 hover:bg-red-600 px-3 py-1 rounded-lg">Register</a>
+      </ng-template>
+    </div>
+  </ng-template>
+</p-menubar>
