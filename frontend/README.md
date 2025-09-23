@@ -47,20 +47,23 @@ For a full list of schematics:
 
 ```bash
 ng generate --help
-Building for production
 ```
+Building for production
+
 ```bash
 ng build
-Build artifacts are stored in the dist/ folder. Production builds are optimized for performance.
 ```
+Build artifacts are stored in the dist/ folder. Production builds are optimized for performance.
+
 
 Running tests
 Unit tests (Karma):
 
 ```bash
 ng test
-End-to-end tests:
 ```
+End-to-end tests:
+
 ```bash
 ng e2e
 ```
