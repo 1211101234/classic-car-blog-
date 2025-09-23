@@ -1,5 +1,5 @@
-### JdmCarBlog
-This project is a classic car blog with an Angular 20.1 frontend and a Django backend.
+### Classic Car Blog
+This project is a classic car blog with an Angular 20.1.4 frontend and a Django backend.
 
 ### Project Structure
 ```
