@@ -1,26 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { RouterModule } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
+import { CarService } from '../../services/cars';
 import { Car } from '../../models/car';
-import { selectCarById } from '../../store/car.selector';
 
 @Component({
   selector: 'app-car-detail',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './car-detail.html',
-
 })
 export class CarDetail implements OnInit {
-  car$!: Observable<Car | undefined>;
+  car$!: Observable<Car>;
 
-  constructor(private route: ActivatedRoute, private store: Store) {}
+  constructor(private route: ActivatedRoute, private carService: CarService) {}
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.car$ = this.store.select(selectCarById(id));
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const id = idParam ? +idParam : null;
+
+    if (id !== null) {
+      this.car$ = this.carService.getCarById(id);
+    } else {
+      console.error('Invalid car ID');
+    }
   }
 }

@@ -1,5 +1,5 @@
 <p-card header="Add New Car" class="p-6 shadow-lg rounded-xl max-w-3xl mx-auto">
-  <form (ngSubmit)="onSubmit()" #carForm="ngForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+  <form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
 
     <!-- Car Name -->
     <div>
@@ -8,26 +8,23 @@
         id="name"
         type="text"
         pInputText
-        [(ngModel)]="newCar.name"
-        name="name"
-        required
+        formControlName="name"
         placeholder="e.g. Toyota AE86"
-        class="w-full py-1 px-2 text-sm" />
+        class="w-full py-1 px-2 text-sm"
+      />
     </div>
 
     <!-- Year -->
     <div>
       <label for="year" class="block font-medium mb-1">Year</label>
       <p-inputNumber
-        [(ngModel)]="newCar.year"
-        name="year"
+        formControlName="year"
         [min]="1900"
         [max]="2100"
-        required
         [useGrouping]="false"
         placeholder="e.g. 1985"
-        inputStyleClass="w-full py-1 px-2 text-sm">
-      </p-inputNumber>
+        inputStyleClass="w-full py-1 px-2 text-sm"
+      ></p-inputNumber>
     </div>
 
     <!-- Origin -->
@@ -37,51 +34,45 @@
         id="origin"
         type="text"
         pInputText
-        [(ngModel)]="newCar.origin"
-        name="origin"
-        required
+        formControlName="origin"
         placeholder="e.g. Japan"
-        class="w-full py-1 px-2 text-sm" />
+        class="w-full py-1 px-2 text-sm"
+      />
     </div>
 
     <!-- Horsepower -->
     <div>
       <label for="horsepower" class="block font-medium mb-1">Horsepower</label>
       <p-inputNumber
-        [(ngModel)]="newCar.horsepower"
-        name="horsepower"
+        formControlName="horsepower"
         [min]="0"
-        required
         placeholder="e.g. 130"
-        inputStyleClass="w-full py-1 px-2 text-sm">
-      </p-inputNumber>
+        inputStyleClass="w-full py-1 px-2 text-sm"
+      ></p-inputNumber>
     </div>
 
     <!-- Top Speed -->
     <div>
-      <label for="topSpeed" class="block font-medium mb-1">Top Speed (km/h)</label>
+      <label for="top_speed" class="block font-medium mb-1">Top Speed (km/h)</label>
       <p-inputNumber
-        [(ngModel)]="newCar.topSpeed"
-        name="topSpeed"
+        formControlName="top_speed"
         [min]="0"
-        required
         placeholder="e.g. 200"
-        inputStyleClass="w-full py-1 px-2 text-sm">
-      </p-inputNumber>
+        inputStyleClass="w-full py-1 px-2 text-sm"
+      ></p-inputNumber>
     </div>
 
-    <!--Engine-->
+    <!-- Engine -->
     <div>
       <label for="engine" class="block font-medium mb-1">Engine</label>
       <input
         id="engine"
         type="text"
         pInputText
-        [(ngModel)]="newCar.engine"
-        name="engine"
-        required
+        formControlName="engine"
         placeholder="e.g. 1.6L I4"
-        class="w-full py-1 px-2 text-sm" />
+        class="w-full py-1 px-2 text-sm"
+      />
     </div>
 
     <!-- Image URL -->
@@ -91,11 +82,10 @@
         id="image"
         type="text"
         pInputText
-        [(ngModel)]="newCar.image"
-        name="image"
-        required
+        formControlName="image"
         placeholder="e.g. https://example.com/car.jpg"
-        class="w-full py-1 px-2 text-sm" />
+        class="w-full py-1 px-2 text-sm"
+      />
     </div>
 
     <!-- Description (full width row) -->
@@ -104,12 +94,11 @@
       <textarea
         id="description"
         pInputText
-        [(ngModel)]="newCar.description"
-        name="description"
+        formControlName="description"
         rows="3"
         placeholder="e.g. A legendary drift car popularized in Initial D."
-        class="w-full py-1 px-2 text-sm">
-      </textarea>
+        class="w-full py-1 px-2 text-sm"
+      ></textarea>
     </div>
 
     <!-- Submit Button (full width row) -->
@@ -118,7 +107,10 @@
         type="submit"
         label="Add Car"
         icon="pi pi-check"
-        styleClass="w-full bg-green-700 hover:bg-green-500 border-0 text-white text-sm py-2">
-      </p-button>
+        styleClass="w-full bg-green-700 hover:bg-green-500 border-0 text-white text-sm py-2"
+        [disabled]="carForm.invalid"
+      ></p-button>
     </div>
 
+  </form>
+</p-card>

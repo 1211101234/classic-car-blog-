@@ -8,12 +8,15 @@ import { routes } from './app/app.routes';           // ✅ import your routes
 import { providePrimeNG } from 'primeng/config';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import Aura from '@primeuix/themes/aura';
+import { provideHttpClient } from '@angular/common/http';
+
 
 bootstrapApplication(App, {
   providers: [
     provideRouter(routes),              // ✅ add this line
     provideStore({ car: carReducer }),
     provideStoreDevtools(),
+    provideHttpClient(),
     provideAnimations(),
     providePrimeNG({
       theme: {
@@ -22,6 +25,7 @@ bootstrapApplication(App, {
             cssLayer: {
                 name: 'primeng',
                 order: 'theme, base, primeng'
+
             }
         }
       }

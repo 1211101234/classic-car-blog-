@@ -9,5 +9,5 @@ export interface Car {
   origin: string;
   horsepower?: number;
   engine?: string;
-  topSpeed?: number;
+  top_speed?: number;
 }

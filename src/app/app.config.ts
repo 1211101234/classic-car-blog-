@@ -11,6 +11,7 @@ import {providePrimeNG} from 'primeng/config';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 //  PrimeNG v20 AoT theme import
 import Aura from '@primeuix/themes/aura';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,6 +32,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore({ auth: authReducer }),
     provideEffects([AuthEffects]),
+    provideHttpClient(),
   ]
 };
 

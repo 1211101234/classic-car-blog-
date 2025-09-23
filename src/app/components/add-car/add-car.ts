@@ -1,67 +1,62 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
-
-// Models & NgRx
+import { CarService } from '../../services/cars';
 import { Car } from '../../models/car';
-import { addCar } from '../../store/car.actions';
-import { selectCarFeature } from '../../store/car.selector';
 
 // PrimeNG Modules
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-add-car',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
+    CommonModule,
+    ReactiveFormsModule,
     InputTextModule,
     InputNumberModule,
+    TextareaModule,
     ButtonModule,
     CardModule
   ],
   templateUrl: './add-car.html',
 })
 export class AddCarComponent {
-  newCar: Car = {
-    id: 0,
-    name: '',
-    year: null as any,
-    origin: '',
-    image: '',
-    description: '',
-    horsepower: 0,
-    topSpeed: 0,
-  };
+  carForm: FormGroup;
 
-  cars$: Observable<Car[]>;
-
-  constructor(private store: Store, private router: Router) {
-    // Select cars from store state
-    this.cars$ = this.store.select(selectCarFeature).pipe(
-      map(state => state.cars)
-    );
+  constructor(
+    private fb: FormBuilder,
+    private carService: CarService,
+    private router: Router
+  ) {
+    this.carForm = this.fb.group({
+      name: ['', Validators.required],
+      year: [null, Validators.required],
+      origin: ['', Validators.required],
+      description: [''],
+      image: [''],
+      horsepower: [0],
+      topSpeed: [0],
+      engine: ['']
+    });
   }
 
   onSubmit() {
-    this.cars$.pipe(take(1)).subscribe((cars) => {
-      const maxId = cars.length > 0 ? Math.max(...cars.map(c => c.id)) : 0;
+    if (this.carForm.valid) {
+      this.carService.addCar(this.carForm.value).subscribe({
+        next: () => this.router.navigate(['/cars']),
+        error: (err) => console.error('Failed to add car', err)
+      });
+    }
+  }
 
-      const carToAdd: Car = {
-        ...this.newCar,
-        id: maxId + 1,
-      };
-
-      this.store.dispatch(addCar({ car: carToAdd }));
-      this.router.navigate(['/']);
-    });
+  cancel() {
+    this.router.navigate(['/cars']);
   }
 }
