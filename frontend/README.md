@@ -116,11 +116,11 @@ Start the Django backend:
 ```bash
 cd backend
 python manage.py runserver
-Start the Angular frontend in another terminal:
 ```
+Start the Angular frontend in another terminal:
 ```bash
 cd frontend
-ng serve --proxy-config proxy.conf.json
+ng serve
 ```
 The full application can now be accessed at **http://localhost:4200/**.
 
