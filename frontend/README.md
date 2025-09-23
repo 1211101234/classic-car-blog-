@@ -1,59 +1,146 @@
 # JdmCarBlog
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.4.
+This project is a **classic car blog** with an **Angular 20.1 frontend** and a **Django backend**.
 
-## Development server
+---
 
-To start a local development server, run:
+## Project Structure
+
+jdm-car-blog/
+├─ frontend/ # Angular frontend
+├─ backend/ # Django backend
+└─ README.md # Project instructions
+
+yaml
+Copy code
+
+---
+
+## Frontend (Angular)
+
+The frontend was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.4.
+
+### Development server
+
+To start the Angular development server:
 
 ```bash
-ng serve
-```
+cd frontend
+npm install
+ng serve --proxy-config proxy.conf.json
+Navigate to http://localhost:4200/. The app will automatically reload whenever you modify any source files.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Note: The proxy.conf.json ensures API requests are forwarded to the Django backend to avoid CORS issues.
 
-## Code scaffolding
+Proxy Configuration
+Create a proxy.conf.json in the frontend/ folder with:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+json
+Copy code
+{
+  "/api": {
+    "target": "http://localhost:8000",
+    "secure": false
+  }
+}
+This allows Angular to redirect API calls to Django without CORS errors.
 
-```bash
+Code scaffolding
+Generate a new component:
+
+bash
+Copy code
 ng generate component component-name
-```
+For a full list of schematics:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
+bash
+Copy code
 ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+Building for production
+bash
+Copy code
 ng build
-```
+Build artifacts are stored in the dist/ folder. Production builds are optimized for speed.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Running tests
+Unit tests (Karma):
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
+bash
+Copy code
 ng test
-```
+End-to-end tests:
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
+bash
+Copy code
 ng e2e
-```
+Angular CLI does not include an e2e framework by default.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Backend (Django)
+The backend is built with Django and serves the API for the Angular frontend.
 
-## Additional Resources
+Setup
+Navigate to the backend folder:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+bash
+Copy code
+cd backend
+Create a virtual environment (recommended):
+
+bash
+Copy code
+python -m venv env
+env\Scripts\activate   # Windows
+# source env/bin/activate  # Linux/Mac
+Install dependencies:
+
+bash
+Copy code
+pip install -r requirements.txt
+Apply database migrations:
+
+bash
+Copy code
+python manage.py migrate
+Running the server
+bash
+Copy code
+python manage.py runserver
+The backend will run at http://localhost:8000/. API endpoints can be accessed via /api/....
+
+Environment Variables
+You can create a .env file in the backend/ folder to manage sensitive settings like Django SECRET_KEY:
+
+ini
+Copy code
+SECRET_KEY=your_secret_key_here
+DEBUG=True
+Make sure .env is added to .gitignore to avoid exposing secrets.
+
+How to Run Both Frontend and Backend Locally
+Start the backend first:
+
+bash
+Copy code
+cd backend
+python manage.py runserver
+Start the frontend in another terminal:
+
+bash
+Copy code
+cd frontend
+ng serve --proxy-config proxy.conf.json
+Now you can access the full application at http://localhost:4200/.
+
+Additional Resources
+Angular CLI Overview
+
+Django Documentation
+
+Proxy Configuration in Angular
+
+Notes
+Ensure you have Python 3.10+ and Node.js 20+ installed.
+
+Make sure the backend/db.sqlite3 file is present or migrations are applied.
+
+Use npm install in frontend/ and pip install -r requirements.txt in backend/ before running servers.
