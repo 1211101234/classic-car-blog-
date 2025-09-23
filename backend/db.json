@@ -1,0 +1,182 @@
+{
+  "cars": [
+
+
+  {
+    "id": 1,
+    "name": "Nissan Skyline GT-R (Hakosuka)",
+    "year": 1971,
+    "origin": "Japan",
+    "engine": "2.0L Inline-6, DOHC (S20)",
+    "horsepower": 160,
+    "topSpeed": null,
+    "description": "Classic GT-R with a straight-6 engine, known for its aggressive boxy styling.",
+    "image": "https://jtcars.net/lib/2022/09/2aab0714-scaled.jpeg"
+  },
+  {
+    "id": 2,
+    "name": "Toyota Corolla AE86",
+    "year": 1985,
+    "origin": "Japan",
+    "engine": null,
+    "horsepower": 130,
+    "topSpeed": null,
+    "description": "The legendary drift car, popularized by the anime Initial D.",
+    "image": "https://i.redd.it/oe8jei4jy6ga1.png"
+  },
+  {
+    "id": 3,
+    "name": "Honda Civic EG6",
+    "year": 1991,
+    "origin": "Japan",
+    "engine": "1.6L B16",
+    "horsepower": 160,
+    "topSpeed": 210,
+    "description": "Lightweight VTEC-powered hatchback loved by tuners.",
+    "image": "eg6.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Datsun 240Z",
+    "year": 1970,
+    "origin": "Japan",
+    "engine": "2.4 liter L24 Inline-six",
+    "horsepower": 150,
+    "topSpeed": 201,
+    "description": "The iconic Fairlady Z, praised for its performance and affordability.",
+    "image": "https://static0.topspeedimages.com/wordpress/wp-content/uploads/2023/10/download-3.jpeg?w=1600&h=900&fit=crop"
+  },
+  {
+    "id": 5,
+    "name": "Toyota 2000GT",
+    "year": 1968,
+    "origin": "Japan",
+    "engine": "2.0L Inline-6 DOHC (3M)",
+    "horsepower": 150,
+    "topSpeed": 220,
+    "description": "Japan’s first true supercar, co-developed with Yamaha. Sleek, rare (only 351 built), and famously featured in a James Bond film (You Only Live Twice).",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/9/97/TOYOTA_2000GT.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Mazda RX-7 FB",
+    "year": 1985,
+    "origin": "Japan",
+    "engine": "1.1L 12A Rotary",
+    "horsepower": 135,
+    "topSpeed": 190,
+    "description": "Lightweight, affordable sports car with a rotary engine. The RX-7 became a JDM tuner icon and is loved for its handling.",
+    "image": "https://static0.hotcarsimages.com/wordpress/wp-content/uploads/2022/07/Mazda-RX-7-1984-1600-03.jpg"
+  },
+  {
+    "id": 7,
+    "name": "BMW E30 M3",
+    "year": 1986,
+    "origin": "Germany",
+    "engine": "2.3L Inline-4 DOHC S14",
+    "horsepower": 215,
+    "topSpeed": 235,
+    "description": "Homologation special for Group A racing. Sharp handling, boxy design, and a motorsport pedigree make it one of BMW’s most celebrated cars.",
+    "image": "https://images.squarespace-cdn.com/content/v1/5caed8960cf57d49530e8c60/649838fe-3e86-4263-9be7-18299344fef0/art-mg-bmwe30m3evo1e.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Mercedes-Benz 300SL \"Gulllwing\"",
+    "year": 1955,
+    "origin": "Germany",
+    "engine": "3.0L Inline-6 SOHC",
+    "horsepower": 215,
+    "topSpeed": 260,
+    "description": "The first true supercar of the 1950s. Known for its signature gullwing doors and advanced (for its time) direct fuel injection.",
+    "image": "https://robbreport.com/wp-content/uploads/2022/02/Alloy_Gullwing5.jpg?w=1000"
+  },
+  {
+    "id": 9,
+    "name": "Porsche 911 Carrera RS 2.7",
+    "year": 1973,
+    "origin": "Germany",
+    "engine": "2.7L Flat-6",
+    "horsepower": 210,
+    "topSpeed": 240,
+    "description": "Lightweight homologation special with the iconic \"ducktail\" spoiler. Considered one of the purest and most collectible 911s.",
+    "image": "https://cdn.dealeraccelerate.com/bagauction/11/1936/105907/1920x1440/1973-porsche-911-carrera-rs-2-7-lightweight"
+  },
+  {
+    "id": 10,
+    "name": "Jaguar E-Type",
+    "year": 1965,
+    "origin": "England",
+    "engine": "3.8L Inline-6",
+    "horsepower": 265,
+    "topSpeed": 240,
+    "description": "Enzo Ferrari once called it “the most beautiful car ever made.” A British sports car icon with elegance and speed.",
+    "image": "https://images.bauerhosting.com/marketing/sites/8/2022/12/e81f82b2-1163-4bd9-b90b-8e66c94f1912.jpg?ar=16%3A9&fit=crop&crop=top&auto=format&w=1440&q=80"
+  },
+  {
+    "id": 11,
+    "name": "Ferrari 250 GTO",
+    "year": 1964,
+    "origin": "Italy",
+    "engine": "3.0L V12",
+    "horsepower": 300,
+    "topSpeed": 280,
+    "description": "The holy grail of classic cars. Built for GT racing, only 36 were made. Today, it’s one of the most valuable cars in the world.",
+    "image": "https://www.supercars.net/blog/wp-content/uploads/2016/05/Screenshot-2016-05-16-15.39.33.png"
+  },
+  {
+    "id": 12,
+    "name": "Toyota Supra Mk3",
+    "year": 1986,
+    "origin": "Japan",
+    "engine": "3.0L Inline-6 Turbo (7M-GTE)",
+    "horsepower": 230,
+    "topSpeed": 245,
+    "description": "A grand tourer with a turbocharged punch, predecessor to the iconic Mk4 Supra. Loved for its balance of comfort and performance.",
+    "image": "https://preview.redd.it/mugy56ocxmj51.jpg?width=1080&crop=smart&auto=webp&s=3575bd4279fc5ba8d89ad9f8007514121c1df530"
+  },
+  {
+    "id": 13,
+    "name": "Nissan Silvia S13",
+    "year": 1988,
+    "origin": "Japan",
+    "engine": "1.8L Turbo Inline-4 (CA18DET)",
+    "horsepower": 167,
+    "topSpeed": 205,
+    "description": "Lightweight, RWD coupe famous in drifting culture. Affordable tuner platform with a cult following.",
+    "image": "https://images.collectingcars.com/073963/27-02-24-AS-03.jpg?w=1263&fit=fillmax&crop=edges&auto=format,compress&cs=srgb&q=85"
+  },
+  {
+    "id": 14,
+    "name": "BMW E39 M5",
+    "year": 1998,
+    "origin": "Germany",
+    "engine": "4.9L V8 (S62)",
+    "horsepower": 400,
+    "topSpeed": 250,
+    "description": "A “wolf in sheep’s clothing.” Comfortable executive sedan but with supercar performance. Often considered the best M5 ever.",
+    "image": "https://bmwtuning.co/wp-content/uploads/2022/11/e39.webp"
+  },
+  {
+    "id": 15,
+    "name": "Mercedes-Benz 190E",
+    "year": 1983,
+    "origin": "Germany",
+    "engine": "2.3L Inline-4 16V Cosworth (M102)",
+    "horsepower": 190,
+    "topSpeed": 230,
+    "description": "Compact executive sedan, famous for its 190E 2.3-16 and 2.5-16 Evolution versions that battled the BMW E30 M3 in DTM touring car racing. Sturdy, boxy, and now a cult classic.",
+    "image": "https://www.carscoops.com/wp-content/uploads/2020/08/Mercedes-Benz-190E-2.5-16-Evolution-7b-1024x555.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Mercedes-Benz 500E",
+    "year": 1994,
+    "origin": "Germany",
+    "engine": "5.0L V8 (M119)",
+    "horsepower": 322,
+    "topSpeed": 250,
+    "description": "Co-developed with Porsche, who also hand-assembled it in Stuttgart. Wider track, flared arches, uprated brakes, and suspension for handling. Looks like a regular W124 to the untrained eye, but it was a “wolf in sheep’s clothing” that could keep up with Ferraris and Porsches of its era. Today, it’s one of the most desirable classic Mercedes performance sedans.",
+    "image": "https://www.secret-classics.com/wp-content/uploads/2020/09/30yrmercedes500e-09.jpg"
+  }
+]
+}
