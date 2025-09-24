@@ -1,0 +1,5 @@
+<button (click)="toggleLike()" [disabled]="loading" class="like-btn">
+  <span *ngIf="liked">❤️</span>
+  <span *ngIf="!liked">🤍</span>
+  <span>{{ likeCount }}</span>
+</button>
