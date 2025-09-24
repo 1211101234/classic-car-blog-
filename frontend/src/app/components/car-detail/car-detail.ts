@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CarService } from '../../services/cars';
-import { Car } from '../../models/car';
+import { CarService, Car } from '../../services/cars';
+import { LikeButtonComponent } from '../like-button/like-button';
+import { CommentComponent } from '../comment/comment.component';
+
 
 @Component({
   selector: 'app-car-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,LikeButtonComponent, CommentComponent],
   templateUrl: './car-detail.html',
 })
 export class CarDetail implements OnInit {

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { CarService } from '../../services/cars';
-import { Car } from '../../models/car';
+import { CarService, Car } from '../../services/cars';
 
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';

@@ -1,0 +1,61 @@
+<div class="mt-8 space-y-6">
+  <!-- New Top-Level Comment -->
+  <div class="flex flex-col">
+    <textarea
+      [(ngModel)]="newComment"
+      placeholder="Add a comment..."
+      rows="3"
+      class="p-2 border rounded-lg mb-2"
+    ></textarea>
+    <button
+      (click)="postComment()"
+      class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+    >
+      Post
+    </button>
+  </div>
+
+  <!-- Existing Comments -->
+  <div *ngFor="let comment of comments" class="border-b pb-4">
+    <p class="font-medium">
+      {{ comment.user }}
+      <span class="text-gray-500 text-sm">{{ comment.created_at | date: 'short' }}</span>
+    </p>
+    <p class="mb-2">{{ comment.content }}</p>
+
+    <!-- Reply Toggle Button -->
+    <button
+      (click)="toggleReplyBox(comment.id)"
+      class="text-sm text-blue-600 hover:underline mb-2"
+    >
+      {{ replyBoxVisible[comment.id] ? 'Cancel' : 'Reply' }}
+    </button>
+
+    <!-- Reply Input -->
+    <div *ngIf="replyBoxVisible[comment.id]" class="ml-4 flex flex-col space-y-2">
+      <textarea
+        [(ngModel)]="replyMap[comment.id]"
+        placeholder="Write a reply..."
+        rows="2"
+        class="p-2 border rounded-lg"
+      ></textarea>
+      <button
+        (click)="postComment(comment.id)"
+        class="px-3 py-1 bg-gray-200 rounded-lg text-gray-800 hover:bg-gray-300 w-fit"
+      >
+        Reply
+      </button>
+    </div>
+
+    <!-- Nested Replies -->
+    <div *ngIf="comment.replies?.length" class="ml-6 mt-2 space-y-2">
+      <div *ngFor="let reply of comment.replies" class="border-l-2 border-gray-200 pl-4">
+        <p class="font-medium">
+          {{ reply.user }}
+          <span class="text-gray-500 text-sm">{{ reply.created_at | date: 'short' }}</span>
+        </p>
+        <p>{{ reply.content }}</p>
+      </div>
+    </div>
+  </div>
+</div>
