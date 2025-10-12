@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService, User } from '../auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -14,6 +14,7 @@ export class LoginComponent {
   usernameOrEmail = '';
   password = '';
   errorMessage = '';
+  isLoading = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -25,12 +26,24 @@ export class LoginComponent {
       return;
     }
 
-    const success = this.authService.login(this.usernameOrEmail, this.password);
+    this.isLoading = true;
 
-    if (success) {
-      this.router.navigate(['/']);
-    } else {
-      this.errorMessage = 'Invalid username/email or password.';
-    }
+    this.authService.login(this.usernameOrEmail, this.password).subscribe({
+      next: (res: any) => {
+        this.isLoading = false;
+
+        // Make sure backend returns user object
+        if (res.user) {
+          this.authService.setLoggedInUser(res.user);
+          this.router.navigate(['/']); // Redirect to home or dashboard
+        } else {
+          this.errorMessage = 'Unexpected response from server.';
+        }
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = err.error?.detail || 'Invalid username/email or password.';
+      }
+    });
   }
 }

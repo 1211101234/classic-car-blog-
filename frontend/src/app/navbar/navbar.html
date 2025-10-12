@@ -14,7 +14,7 @@
   <ng-template pTemplate="end">
     <div class="flex items-center space-x-6">
       <ng-container *ngIf="authService.isLoggedIn(); else guestLinks">
-        <span class="text-black">Welcome, {{ authService.getUsername() }}</span>
+        <span class="text-black">Welcome, {{ authService.getLoggedInUser() }}</span>
         <p-button
           (click)="logout()"
           label="Logout"

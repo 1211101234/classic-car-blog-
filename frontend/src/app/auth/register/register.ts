@@ -8,13 +8,14 @@ import { AuthService, User } from '../auth.service';
   selector: 'app-register',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './register.html'
+  templateUrl: './register.html',
 })
 export class RegisterComponent {
   user: User = { username: '', email: '', password: '' };
   confirmPassword = '';
   errorMessage = '';
   successMessage = '';
+  isLoading = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -27,17 +28,36 @@ export class RegisterComponent {
       return;
     }
 
-    const registered = this.authService.register(this.user);
+    this.isLoading = true;
 
-    if (!registered) {
-      this.errorMessage = 'User with this username or email already exists.';
-      return;
-    }
+    this.authService.register(this.user).subscribe({
+      next: (res: any) => {
+        this.isLoading = false;
 
-    this.successMessage = 'Registration successful! Redirecting to login...';
+        // Optional: store user locally after successful registration
+        if (res.user) {
+          this.authService.setLoggedInUser(res.user);
+        }
 
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 1500);
+        this.successMessage =
+          'Registration successful! Redirecting to login...';
+
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 1500);
+      },
+      error: (err) => {
+        this.isLoading = false;
+
+        if (err.error?.username) {
+          this.errorMessage = 'Username already exists.';
+        } else if (err.error?.email) {
+          this.errorMessage = 'Email already exists.';
+        } else {
+          this.errorMessage =
+            err.error?.detail || 'Registration failed. Please try again.';
+        }
+      },
+    });
   }
 }
