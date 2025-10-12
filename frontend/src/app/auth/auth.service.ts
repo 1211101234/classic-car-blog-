@@ -1,105 +1,82 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject, tap } from 'rxjs';
 
 export interface User {
-  email: string;
+  id?: number;
   username: string;
-  password: string;
+  email?: string;
+  usernameOrEmail?: string;
+  token?: string;
+  password?: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  isAuthenticated(): boolean {
-    throw new Error('Method not implemented.');
-  }
-  private users: User[] = [];
-  private loggedInUser: User | null = null;
+  private apiUrl = 'http://127.0.0.1:8000/api/users/';
 
-  constructor() {
-    // Load users from localStorage on service init
-    const storedUsers = localStorage.getItem('users');
-    if (storedUsers) {
-      this.users = JSON.parse(storedUsers);
-      console.log('Loaded users from localStorage:', this.users);
-    }
+  // BehaviorSubject to track auth state changes
+  private authStateSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
+  public authState$ = this.authStateSubject.asObservable();
 
-    // Load loggedInUser from localStorage
-    const storedLoggedInUser = localStorage.getItem('loggedInUser');
-    if (storedLoggedInUser) {
-      this.loggedInUser = JSON.parse(storedLoggedInUser);
-      console.log('Loaded logged-in user from localStorage:', this.loggedInUser);
-    }
-  }
+  constructor(private http: HttpClient) {}
 
-  register(user: User): boolean {
-    const exists = this.users.some(
-      u => u.username === user.username || u.email === user.email
+  /** Register a new user */
+  register(user: {
+    username: string;
+    email: string;
+    password: string;
+  }): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}create/`, user).pipe(
+      tap((res) => {
+        if (res.token) {
+          this.setLoggedInUser(res);
+          this.updateAuthState();
+        }
+      })
     );
-    if (exists) {
-      console.log('Registration failed: user exists', user);
-      return false;
-    }
-
-    this.users.push(user);
-    localStorage.setItem('users', JSON.stringify(this.users));
-    console.log('User registered:', user);
-    return true;
   }
 
-  login(usernameOrEmail: string, password: string): boolean {
-    // Always refresh users from storage to stay in sync
-    const storedUsers = localStorage.getItem('users');
-    this.users = storedUsers ? JSON.parse(storedUsers) : [];
-
-    console.log('Trying login with:', usernameOrEmail, password);
-    console.log('Users:', this.users);
-
-    const foundUser = this.users.find(
-      u =>
-        (u.username === usernameOrEmail || u.email === usernameOrEmail) &&
-        u.password === password
-    );
-
-    console.log('Matched user:', foundUser);
-
-    if (foundUser) {
-      this.loggedInUser = foundUser;
-      localStorage.setItem('loggedInUser', JSON.stringify(foundUser));
-      return true;
-    }
-
-    return false;
+  /** Login user via username or email */
+  login(usernameOrEmail: string, password: string): Observable<User> {
+    return this.http
+      .post<User>(`${this.apiUrl}login/`, { usernameOrEmail, password })
+      .pipe(
+        tap((res) => {
+          if (res.token) {
+            this.setLoggedInUser(res);
+            this.updateAuthState();
+          }
+        })
+      );
   }
 
-  isLoggedIn(): boolean {
-    return this.loggedInUser !== null || !!localStorage.getItem('loggedInUser');
+  /** Store logged-in user in localStorage */
+  setLoggedInUser(user: User): void {
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
   }
 
-  logout(): void {
-    this.loggedInUser = null;
-    localStorage.removeItem('loggedInUser');
-    console.log('User logged out');
-  }
-
+  /** Get logged-in user from localStorage */
   getLoggedInUser(): User | null {
-    if (this.loggedInUser) return this.loggedInUser;
-
     const stored = localStorage.getItem('loggedInUser');
-    if (stored) {
-      this.loggedInUser = JSON.parse(stored);
-      return this.loggedInUser;
-    }
-    return null;
+    return stored ? JSON.parse(stored) : null;
   }
 
-  getUsername(): string {
-    const user = this.getLoggedInUser();
-    return user ? user.username : '';
+  /** Check if a user is logged in */
+  isLoggedIn(): boolean {
+    return !!this.getLoggedInUser();
   }
-}
-export interface AuthGuardService {
-  isLoggedIn(): boolean;
-  getLoggedInUser(): User | null;
-  logout(): void;
+
+  /** Logout user */
+  logout(): void {
+    localStorage.removeItem('loggedInUser');
+    this.updateAuthState();
+  }
+
+  /** Update auth state for subscribers */
+  private updateAuthState(): void {
+    this.authStateSubject.next(this.isLoggedIn());
+  }
 }

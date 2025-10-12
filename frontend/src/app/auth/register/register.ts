@@ -1,43 +1,97 @@
+import { MessageModule } from 'primeng/message';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService, User } from '../auth.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './register.html'
+  imports: [
+    FormsModule,
+    CommonModule,
+    InputTextModule,
+    PasswordModule,
+    ButtonModule,
+    ToastModule,
+    RouterModule,
+    MessageModule
+  ],
+  providers: [MessageService],
+  templateUrl: './register.html',
 })
 export class RegisterComponent {
-  user: User = { username: '', email: '', password: '' };
+  username = '';
+  email = '';
+  password = '';
   confirmPassword = '';
-  errorMessage = '';
-  successMessage = '';
+  isLoading = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
-  onSubmit() {
-    this.errorMessage = '';
-    this.successMessage = '';
-
-    if (this.user.password !== this.confirmPassword) {
-      this.errorMessage = 'Passwords do not match.';
+  onRegister() {
+    // Basic validation
+    if (!this.username || !this.email || !this.password || !this.confirmPassword) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please fill all required fields.',
+      });
       return;
     }
 
-    const registered = this.authService.register(this.user);
-
-    if (!registered) {
-      this.errorMessage = 'User with this username or email already exists.';
+    if (this.password !== this.confirmPassword) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Passwords do not match.',
+      });
       return;
     }
 
-    this.successMessage = 'Registration successful! Redirecting to login...';
+    this.isLoading = true;
 
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 1500);
+    this.authService.register({
+      username: this.username,
+      email: this.email,
+      password: this.password
+    }).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: `Account created for ${res.username}!`,
+        });
+        // Redirect to login page after 1 second
+        setTimeout(() => this.router.navigate(['/login']), 1000);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        // Collect error messages from Django serializer
+        const errors = err.error?.errors || err.error || {};
+        const message =
+          errors.username?.[0] ||
+          errors.email?.[0] ||
+          errors.password?.[0] ||
+          'Registration failed';
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+        });
+      },
+    });
   }
 }
