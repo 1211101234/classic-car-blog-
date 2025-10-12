@@ -1,110 +1,129 @@
-<section id="car-list-section" class="py-12 px-4 sm:px-6 bg-gradient-to-br from-white to-blue-50 min-h-screen">
+<div class ="container mx-auto px-8 py-12">
+<section id="car-list-section" class="py-12 px-4 sm:px-6 bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 min-h-screen">
   <div class="max-w-7xl mx-auto">
     <!-- Header Section -->
     <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-gray-800 mb-3">Our Car Collection</h2>
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl mb-4 shadow-lg">
+        <i class="pi pi-car text-white text-3xl"></i>
+      </div>
+      <h2 class="text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-4">
+        Classic Car Collection
+      </h2>
       <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-        Explore our curated selection of premium vehicles from around the world
+        Discover timeless automotive excellence from around the world
       </p>
     </div>
 
     <!-- Filter and Sort Controls -->
-    <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4 max-w-4xl mx-auto px-4">
-      <input
-        type="text"
-        placeholder="Filter by origin"
-        (input)="onFilterChange($event.target.value)"
-        class="w-full sm:w-1/2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
+    <div class="max-w-5xl mx-auto mb-10">
+      <div class="bg-white rounded-2xl shadow-lg p-6 backdrop-blur-sm bg-opacity-90">
+        <div class="flex flex-col lg:flex-row items-center gap-4">
+          <!-- Search/Filter Input -->
+          <div class="flex-1 w-full relative">
+            <i class="pi pi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="text"
+              placeholder="Search by origin, name, or year..."
+              (input)="onFilterChange($event.target.value)"
+              class="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-red-500 focus:ring-2 focus:ring-red-200 transition-all duration-200 outline-none text-gray-700"
+            />
+          </div>
 
-      <!-- Sort buttons -->
-      <div class="flex space-x-4">
-        <button
-          (click)="onSortChange('origin')"
-          class="px-4 py-2 bg-blue-50 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-blue-600"
-        >
-          Sort by Origin
-        </button>
+          <!-- Sort Buttons -->
+          <div class="flex gap-3 w-full lg:w-auto">
+            <button
+              (click)="onSortChange('origin')"
+              class="flex-1 lg:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
+              <i class="pi pi-globe"></i>
+              <span class="hidden sm:inline">Origin</span>
+            </button>
 
-        <button
-          (click)="onSortChange('year')"
-          class="px-4 py-2 bg-blue-50 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-blue-600"
-        >
-          Sort by Year
-        </button>
+            <button
+              (click)="onSortChange('year')"
+              class="flex-1 lg:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
+              <i class="pi pi-calendar"></i>
+              <span class="hidden sm:inline">Year</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
     <div *ngIf="filteredCars.length > 0; else noCars">
+      <!-- Results Count -->
+      <div class="mb-6 text-center">
+        <p class="text-gray-600 font-medium">
+          Showing <span class="text-red-600 font-bold">{{ filteredCars.length }}</span>
+          {{ filteredCars.length === 1 ? 'vehicle' : 'vehicles' }}
+        </p>
+      </div>
+
       <!-- Car Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <div
           *ngFor="let car of filteredCars"
-          class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 group cursor-pointer"
-          (click)="goToCarDetails(car.id)"
-        >
-          <!-- Car Image with Hover Effect -->
-          <div class="relative overflow-hidden h-56">
+          class="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group cursor-pointer border border-gray-100"
+          (click)="goToCarDetails(car.id)">
+
+          <!-- Car Image with Overlay -->
+          <div class="relative overflow-hidden h-52">
             <img
               [src]="car.image"
               alt="{{ car.name }}"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            ></div>
-          </div>
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-          <!-- Car Details -->
-          <div class="p-5">
-            <div class="flex justify-between items-start">
-              <h3 class="text-xl font-bold text-gray-900 mb-1 hover:text-blue-600 transition-colors">
-                {{ car.name }}
-              </h3>
-              <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+            <!-- Year Badge -->
+            <div class="absolute top-4 right-4">
+              <span class="inline-flex items-center gap-1 bg-white/95 backdrop-blur-sm text-gray-800 text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
+                <i class="pi pi-calendar text-xs"></i>
                 {{ car.year }}
               </span>
             </div>
 
-            <div class="flex items-center text-sm text-gray-600 mb-3">
-              <svg
-                class="w-4 h-4 mr-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              {{ car.origin }}
+            <!-- Quick View Icon -->
+            <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+              <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg">
+                <i class="pi pi-eye text-red-600"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car Details -->
+          <div class="p-5">
+            <!-- Name -->
+            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors line-clamp-1">
+              {{ car.name }}
+            </h3>
+
+            <!-- Origin -->
+            <div class="flex items-center text-sm text-gray-600 mb-3 pb-3 border-b border-gray-100">
+              <div class="flex items-center gap-1.5">
+                <i class="pi pi-map-marker text-red-500"></i>
+                <span class="font-medium">{{ car.origin }}</span>
+              </div>
             </div>
 
-            <p class="text-gray-600 text-sm line-clamp-2 mb-4">{{ car.description }}</p>
+            <!-- Description -->
+            <p class="text-gray-600 text-sm line-clamp-2 mb-4 min-h-[40px]">
+              {{ car.description }}
+            </p>
 
             <!-- Action Buttons -->
-            <div class="flex space-x-3">
+            <div class="flex gap-2">
               <button
                 (click)="editCar(car.id); $event.stopPropagation()"
-                class="flex-1 bg-blue-50 hover:bg-blue-100 border-blue-600 text-blue-600 font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200"
-              >
-                Edit
+                class="flex-1 flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold py-2.5 px-4 rounded-xl border border-blue-200 hover:border-blue-300 transition-all duration-200">
+                <i class="pi pi-pencil text-sm"></i>
+                <span>Edit</span>
               </button>
 
               <button
                 (click)="deleteCar(car.id); $event.stopPropagation()"
-                class="bg-red-50 hover:bg-red-100 border-red-600 text-red-600 font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-200"
-              >
-                Delete
+                class="flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 font-semibold py-2.5 px-4 rounded-xl border border-red-200 hover:border-red-300 transition-all duration-200">
+                <i class="pi pi-trash text-sm"></i>
               </button>
             </div>
           </div>
@@ -114,23 +133,32 @@
       <!-- Floating Add Button -->
       <a
         routerLink="/add-car"
-        class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg px-6 py-3 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex items-center"
-      >
-        Add Car
+        class="fixed bottom-8 right-8 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold text-base px-6 py-4 rounded-full shadow-2xl transition-all duration-300 hover:shadow-red-500/50 hover:-translate-y-1 flex items-center gap-2 z-50 group">
+        <i class="pi pi-plus-circle text-xl"></i>
+        <span>Add Car</span>
+        <div class="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
       </a>
     </div>
 
     <!-- No Cars Template -->
     <ng-template #noCars>
-      <div class="text-center py-16">
+      <div class="text-center py-20">
         <div class="max-w-md mx-auto">
-          <h3 class="text-2xl font-medium text-gray-700 mt-4">No Cars Found</h3>
-          <p class="text-gray-500 mt-2">Get started by adding your first vehicle to the collection</p>
+          <!-- Empty State Icon -->
+          <div class="inline-flex items-center justify-center w-24 h-24 bg-gray-100 rounded-full mb-6">
+            <i class="pi pi-car text-gray-400 text-5xl"></i>
+          </div>
+
+          <h3 class="text-3xl font-bold text-gray-800 mb-3">No Cars Yet</h3>
+          <p class="text-gray-500 text-lg mb-8 max-w-sm mx-auto">
+            Start building your dream collection by adding your first classic car
+          </p>
+
           <a
             routerLink="/add-car"
-            class="inline-flex items-center mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg shadow-md transition-all hover:-translate-y-0.5"
-          >
-            Add Your First Car
+            class="inline-flex items-center gap-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200">
+            <i class="pi pi-plus-circle text-xl"></i>
+            <span>Add Your First Car</span>
           </a>
         </div>
       </div>
