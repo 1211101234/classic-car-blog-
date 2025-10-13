@@ -5,11 +5,12 @@ from .models import Car, Like, Comment
 class CommentSerializer(serializers.ModelSerializer):
     replies = serializers.SerializerMethodField()
     user = serializers.StringRelatedField(read_only=True)
+    car = serializers.PrimaryKeyRelatedField(read_only=True)  # <--- add this
 
     class Meta:
         model = Comment
         fields = ['id', 'car', 'user', 'parent', 'content', 'created_at', 'updated_at', 'replies']
-        read_only_fields = ['id', 'user', 'created_at', 'updated_at', 'replies']
+        read_only_fields = ['id', 'user', 'created_at', 'updated_at', 'replies', 'car']  # <--- add car
 
     def get_replies(self, obj):
         qs = obj.replies.all()

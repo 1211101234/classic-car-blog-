@@ -1,51 +1,62 @@
-# users/views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics, permissions
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserSerializer
-from rest_framework import generics, permissions
 import logging
 
 logger = logging.getLogger(__name__)
 
 
 # ------------------------------
+# Generate JWT Token Helper
+# ------------------------------
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
+
+
+# ------------------------------
 # User Registration Endpoint
 # ------------------------------
 class UserCreateView(APIView):
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            token, _ = Token.objects.get_or_create(user=user)
+            tokens = get_tokens_for_user(user)
             return Response(
                 {
                     "id": user.id,
                     "username": user.username,
                     "email": user.email,
-                    "usernameOrEmail": user.username,  # convenient for Angular login
-                    "token": token.key,
+                    "usernameOrEmail": user.username,
+                    "token": tokens["access"],  # Angular expects "token"
+                    "refresh": tokens["refresh"],
                 },
                 status=status.HTTP_201_CREATED,
             )
-        else:
-            return Response(
-                {"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST
-            )
+        return Response(
+            {"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 # ------------------------------
 # User Login Endpoint
 # ------------------------------
 class UserLoginView(APIView):
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request):
         try:
-            # Accept both JSON and form-data
             data = request.data if request.data else request.POST
-
             login_input = data.get("usernameOrEmail")
             password = data.get("password")
 
@@ -55,10 +66,10 @@ class UserLoginView(APIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            # Try login by username first
+            # Try login via username first
             user = authenticate(username=login_input, password=password)
 
-            # If login by username fails, try email
+            # Try via email if username fails
             if user is None:
                 try:
                     user_obj = User.objects.get(email=login_input)
@@ -67,22 +78,23 @@ class UserLoginView(APIView):
                     user = None
 
             if user is not None:
-                token, _ = Token.objects.get_or_create(user=user)
+                tokens = get_tokens_for_user(user)
                 return Response(
                     {
                         "id": user.id,
                         "username": user.username,
                         "email": user.email,
                         "usernameOrEmail": user.username,
-                        "token": token.key,
+                        "token": tokens["access"],
+                        "refresh": tokens["refresh"],
                     },
                     status=status.HTTP_200_OK,
                 )
-            else:
-                return Response(
-                    {"error": "Invalid username/email or password"},
-                    status=status.HTTP_401_UNAUTHORIZED,
-                )
+
+            return Response(
+                {"error": "Invalid username/email or password"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
 
         except Exception as e:
             logger.exception("User login failed")
@@ -93,16 +105,16 @@ class UserLoginView(APIView):
 
 
 # ------------------------------
-# User List (admin only)
+# User List (Admin only)
 # ------------------------------
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAdminUser]  # Only admins can list all users
+    permission_classes = [permissions.IsAdminUser]
 
 
 # ------------------------------
-# User Detail (user or admin)
+# User Detail (Self or Admin)
 # ------------------------------
 class UserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
@@ -111,10 +123,7 @@ class UserDetailView(generics.RetrieveAPIView):
 
     def get_object(self):
         user = super().get_object()
-        # Only allow admin or the user themselves
         if self.request.user == user or self.request.user.is_staff:
             return user
-        else:
-            from rest_framework.exceptions import PermissionDenied
-
-            raise PermissionDenied("You do not have permission to view this user.")
+        from rest_framework.exceptions import PermissionDenied
+        raise PermissionDenied("You do not have permission to view this user.")
