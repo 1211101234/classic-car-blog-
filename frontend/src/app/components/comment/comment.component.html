@@ -1,61 +1,201 @@
 <div class="mt-8 space-y-6">
-  <!-- New Top-Level Comment -->
-  <div class="flex flex-col">
-    <textarea
-      [(ngModel)]="newComment"
-      placeholder="Add a comment..."
-      rows="3"
-      class="p-2 border rounded-lg mb-2"
-    ></textarea>
-    <button
-      (click)="postComment()"
-      class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-    >
-      Post
-    </button>
+  <!-- Comment Header -->
+  <div class="flex items-center justify-between mb-6">
+    <h3 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+      <i class="pi pi-comments text-purple-600"></i>
+      <span>Comments</span>
+      <span class="text-lg text-gray-500 font-normal"
+        >({{ comments.length }})</span
+      >
+    </h3>
   </div>
 
-  <!-- Existing Comments -->
-  <div *ngFor="let comment of comments" class="border-b pb-4">
-    <p class="font-medium">
-      {{ comment.user }}
-      <span class="text-gray-500 text-sm">{{ comment.created_at | date: 'short' }}</span>
-    </p>
-    <p class="mb-2">{{ comment.content }}</p>
+  <!-- New Top-Level Comment -->
+  <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+    <div class="flex gap-4">
+      <!-- User Avatar -->
+      <div class="flex-shrink-0">
+        <div
+          class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-md"
+        >
+          <i class="pi pi-user text-white"></i>
+        </div>
+      </div>
 
-    <!-- Reply Toggle Button -->
-    <button
-      (click)="toggleReplyBox(comment.id)"
-      class="text-sm text-blue-600 hover:underline mb-2"
+      <!-- Comment Input -->
+      <div class="flex-1 space-y-3">
+        <textarea
+          [(ngModel)]="newComment"
+          placeholder="Share your thoughts about this car..."
+          rows="3"
+          class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-200 outline-none resize-none text-gray-800 placeholder-gray-400"
+        ></textarea>
+
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-500">
+            {{ newComment.length || 0 }} characters
+          </span>
+          <button
+            (click)="postComment()"
+            [disabled]="!newComment.trim()"
+            class="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 disabled:transform-none transition-all duration-200"
+          >
+            <i class="pi pi-send"></i>
+            <span>Post Comment</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comments List -->
+  <div class="space-y-4">
+    <div
+      *ngFor="let comment of comments; let i = index"
+      class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow duration-200"
     >
-      {{ replyBoxVisible[comment.id] ? 'Cancel' : 'Reply' }}
-    </button>
+      <!-- Comment Header -->
+      <div class="flex items-start gap-4 mb-4">
+        <!-- User Avatar -->
+        <div class="flex-shrink-0">
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md"
+          >
+            <span class="text-white font-bold text-lg">
+              {{ (comment.user || "U").charAt(0).toUpperCase() }}
+            </span>
+          </div>
+        </div>
 
-    <!-- Reply Input -->
-    <div *ngIf="replyBoxVisible[comment.id]" class="ml-4 flex flex-col space-y-2">
-      <textarea
-        [(ngModel)]="replyMap[comment.id]"
-        placeholder="Write a reply..."
-        rows="2"
-        class="p-2 border rounded-lg"
-      ></textarea>
-      <button
-        (click)="postComment(comment.id)"
-        class="px-3 py-1 bg-gray-200 rounded-lg text-gray-800 hover:bg-gray-300 w-fit"
+        <!-- User Info & Comment -->
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="font-bold text-gray-800">{{ comment.user }}</span>
+            <span class="text-gray-400 text-sm">•</span>
+            <span class="text-gray-500 text-sm flex items-center gap-1">
+              <i class="pi pi-clock text-xs"></i>
+              {{ comment.created_at | date : "short" }}
+            </span>
+          </div>
+
+          <p class="text-gray-700 leading-relaxed whitespace-pre-wrap">
+            {{ comment.content }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Comment Actions -->
+      <div class="flex items-center gap-4 ml-16">
+        <button
+          (click)="toggleReplyBox(comment.id)"
+          class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-600 font-medium transition-colors duration-200"
+        >
+          <i class="pi pi-reply"></i>
+          <span>{{
+            replyBoxVisible[comment.id] ? "Cancel Reply" : "Reply"
+          }}</span>
+        </button>
+
+        <div class="flex items-center gap-1 text-sm text-gray-500">
+          <i class="pi pi-comments text-xs"></i>
+          <span>{{ comment.replies.length || 0 }}</span>
+        </div>
+      </div>
+
+      <!-- Reply Input Box -->
+      <div
+        *ngIf="replyBoxVisible[comment.id]"
+        class="ml-16 mt-4 bg-gray-50 rounded-xl p-4 border border-gray-200"
       >
-        Reply
-      </button>
+        <div class="flex gap-3">
+          <div class="flex-shrink-0">
+            <div
+              class="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-sm"
+            >
+              <i class="pi pi-user text-white text-xs"></i>
+            </div>
+          </div>
+
+          <div class="flex-1 space-y-2">
+            <textarea
+              [(ngModel)]="replyMap[comment.id]"
+              placeholder="Write a reply..."
+              rows="2"
+              class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-200 outline-none resize-none text-gray-800 text-sm"
+            ></textarea>
+            <div class="flex justify-end">
+              <button
+                (click)="postComment(comment.id)"
+                [disabled]="
+                  !(replyMap[comment.id] && replyMap[comment.id].trim())
+                "
+                class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg shadow-sm hover:shadow-md transform hover:-translate-y-0.5 disabled:transform-none transition-all duration-200 text-sm"
+              >
+                <i class="pi pi-send text-xs"></i>
+                <span>Reply</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nested Replies -->
+      <div *ngIf="comment.replies?.length" class="ml-16 mt-4 space-y-3">
+        <div
+          *ngFor="let reply of comment.replies; let j = index"
+          class="flex gap-3 p-4 bg-gray-50 rounded-xl border-l-4 hover:bg-gray-300 transition-colors duration-200"
+        >
+          <!-- Reply Avatar -->
+          <div class="flex-shrink-0">
+            <div
+              class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-sm"
+            >
+              <span class="text-white font-bold text-xs">
+                {{ (reply.user || "U").charAt(0).toUpperCase() }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Reply Content -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="font-semibold text-gray-800 text-sm">{{
+                reply.user
+              }}</span>
+              <span class="text-gray-400 text-xs">•</span>
+              <span class="text-gray-500 text-xs flex items-center gap-1">
+                <i class="pi pi-clock text-xs"></i>
+                {{ reply.created_at | date : "short" }}
+              </span>
+            </div>
+            <p
+              class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap"
+            >
+              {{ reply.content }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Show More Replies (if needed) -->
+        <button
+          *ngIf="comment.replies.length > 3"
+          class="text-sm text-purple-600 hover:text-purple-700 font-medium flex items-center gap-1 ml-11 transition-colors duration-200"
+        >
+          <i class="pi pi-chevron-down text-xs"></i>
+          <span>View more replies</span>
+        </button>
+      </div>
     </div>
 
-    <!-- Nested Replies -->
-    <div *ngIf="comment.replies?.length" class="ml-6 mt-2 space-y-2">
-      <div *ngFor="let reply of comment.replies" class="border-l-2 border-gray-200 pl-4">
-        <p class="font-medium">
-          {{ reply.user }}
-          <span class="text-gray-500 text-sm">{{ reply.created_at | date: 'short' }}</span>
-        </p>
-        <p>{{ reply.content }}</p>
+    <!-- Empty State -->
+    <div *ngIf="comments.length === 0" class="text-center py-12">
+      <div
+        class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4"
+      >
+        <i class="pi pi-comments text-gray-400 text-3xl"></i>
       </div>
+      <h4 class="text-lg font-semibold text-gray-700 mb-2">No comments yet</h4>
+      <p class="text-gray-500">Be the first to share your thoughts!</p>
     </div>
   </div>
 </div>

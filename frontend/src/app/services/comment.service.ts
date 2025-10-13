@@ -18,30 +18,50 @@ export interface Comment {
   providedIn: 'root'
 })
 export class CommentService {
-  private apiUrl = 'http://localhost:8000/api/cars'; // base URL
-  private jsonHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+  private apiUrl = 'http://localhost:8000/api'; // root API URL
 
   constructor(private http: HttpClient) {}
 
-  // Get all top-level comments for a car
-  getComments(carId: number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${this.apiUrl}/${carId}/comments/`);
+  // Create headers with Authorization token if available
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('access_token');
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
   }
 
-  // Add a comment or reply
+  // --- Get all top-level comments for a car ---
+  getComments(carId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${this.apiUrl}/cars/${carId}/comments/`);
+  }
+
+  // --- Add a comment or reply ---
   addComment(carId: number, content: string, parentId?: number): Observable<Comment> {
     const body: any = { content };
-    if (parentId) body.parent = parentId; // parent ID for replies
-    return this.http.post<Comment>(`${this.apiUrl}/${carId}/comments/`, body, { headers: this.jsonHeaders });
+    if (parentId) body.parent = parentId; // include parent for replies
+    return this.http.post<Comment>(
+      `${this.apiUrl}/cars/${carId}/comments/`,
+      body,
+      { headers: this.getAuthHeaders() }
+    );
   }
 
-  // Update a comment
+  // --- Update a comment (owner only) ---
   updateComment(commentId: number, content: string): Observable<Comment> {
-    return this.http.put<Comment>(`http://localhost:8000/api/comments/${commentId}/`, { content }, { headers: this.jsonHeaders });
+    return this.http.put<Comment>(
+      `${this.apiUrl}/comments/${commentId}/`,
+      { content },
+      { headers: this.getAuthHeaders() }
+    );
   }
 
-  // Delete a comment
+  // --- Delete a comment (owner only) ---
   deleteComment(commentId: number): Observable<any> {
-    return this.http.delete(`http://localhost:8000/api/comments/${commentId}/`);
+    return this.http.delete(
+      `${this.apiUrl}/comments/${commentId}/`,
+      { headers: this.getAuthHeaders() }
+    );
   }
 }

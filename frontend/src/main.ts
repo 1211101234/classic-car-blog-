@@ -9,30 +9,33 @@ import { routes } from './app/app.routes';
 import { providePrimeNG } from 'primeng/config';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import Aura from '@primeuix/themes/aura';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { provideZoneChangeDetection } from '@angular/core';
-
+import { AuthInterceptor } from './app/interceptors/auth.interceptor';
 
 bootstrapApplication(App, {
   providers: [
-    provideRouter(routes),              // ✅ add this line
-    provideStore({ car: carReducer , auth: authReducer}),
+    provideRouter(routes),
+    provideStore({ car: carReducer, auth: authReducer }),
     provideStoreDevtools(),
-    provideHttpClient(),
     provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-
     providePrimeNG({
       theme: {
         preset: Aura,
         options: {
-            cssLayer: {
-                name: 'primeng',
-                order: 'theme, base, primeng'
-
-            }
-        }
-      }
+          cssLayer: {
+            name: 'primeng',
+            order: 'theme, base, primeng',
+          },
+        },
+      },
     }),
-  ]
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,       // ✅ Correct token
+      useClass: AuthInterceptor,        // ✅ Your interceptor
+      multi: true,
+    },
+  ],
 });
